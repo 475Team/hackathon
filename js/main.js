@@ -1,6 +1,5 @@
-// while(player) {
-// 	var currentTime = player.getCurrentTime();
-// 	// if (currentTime > 10 && currentTime < 15) {
-// 		$("#command").text(currentTime);
-// 	// }
-// }
+function timekeeper(){
+    if (player.getCurrentTime() > 1 && player.getCurrentTime() < 15) {
+      $("#command").text(currentTime);
+    }
+}
