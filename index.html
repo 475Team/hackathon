@@ -9,8 +9,16 @@
   </head>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <iframe id="player" type="text/html" width="640" height="390"
-  src="http://www.youtube.com/embed/videoseries?list=PLykzf464sU98foaZ8PkvJKnsloGN6TWcf&enablejsapi=1&controls=0&showinfo=0&autoplay=1"
+    <iframe id="player" type="text/html" width="100%" height="700"
+  src="http://www.youtube.com/embed/videoseries?list=PLykzf464sU98foaZ8PkvJKnsloGN6TWcf&enablejsapi=1&controls=0&showinfo=0"
   frameborder="0"></iframe>
+
+  <div id="adDiv">
+    <p id="numAds">You have watched <span id="num">0</span> ads.</p>
+  </div>
+
+  <div>
+    <p id="command"></p>
+  </div>
   </body>
 </html>
