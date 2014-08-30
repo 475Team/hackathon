@@ -2,6 +2,7 @@
 //    after the API code downloads.
 var player;
 function onYouTubeIframeAPIReady() {
+  console.log("hi");
   player = new YT.Player('player', 
   {
     events: {
@@ -14,10 +15,7 @@ function onYouTubeIframeAPIReady() {
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
   event.target.playVideo();
-  var currentTime = player.getCurrentTime();
-  // if (currentTime > 10 && currentTime < 15) {
-    $("#command").text(currentTime);
-  // }
+  console.log("hi");
 }
 
 // 5. The API calls this function when the player's state changes.
