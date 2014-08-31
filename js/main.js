@@ -1,5 +1,5 @@
-function timekeeper(){
-    if (player.getCurrentTime() > 1 && player.getCurrentTime() < 15) {
+function timekeeper(videoTime){
+    if (videoTime > 1 && videoTime < 15) {
       $("#command").text(currentTime);
     }
 }
