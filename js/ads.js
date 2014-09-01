@@ -23,7 +23,6 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   console.log("Player ready");
   event.target.playVideo();
-  console.log("hi");
   //refactor this
   var videoTime = 0;
   var timeupdater = null;
@@ -53,27 +52,4 @@ function onPlayerStateChange(event) {
 }
 function stopVideo() {
   player.stopVideo();
-}
-
-function onProgress(time){
- if(time > 2.8 && time < 3){
-  stopVideo();
- }
- clickKeyboard();
-}
-
-window.addEventListener("keyup", keyReleased, false);
-
-function keyReleased(e){
-  console.log("keyReleased")
-  stopVideo();
-}
-
-function clickKeyboard(){
-  $("#command").text("Now click 'p' to continue the video")
-  $(document).keydown(function(e){
-    if(e.keyCode==80){
-      player.playVideo();
-    }
-  })
 }
