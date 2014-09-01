@@ -17,5 +17,3 @@ function clickKeyboard(keyCode, callback){
   }) 
 }
 
-
-
