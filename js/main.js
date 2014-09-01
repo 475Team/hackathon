@@ -1,21 +1,20 @@
-function timekeeper(videoTime, startInterval, endInterval) { 
+function timekeeper(clicked, videoTime, startInterval, endInterval, callback) { 
     console.log("time");
     if (videoTime > startInterval && videoTime < endInterval) {
       $("#command").text("Press P");
-      	return clickKeyboard(80);
-    } else if (videoTime >= 10){
-        player.seekTo(0);
+    	clickKeyboard(80, function(isClicked){
+    		callback(true);
+    	})
     }
-    return false;
 }
 
-function clickKeyboard(keyCode){
+function clickKeyboard(keyCode, callback){
   $(document).keydown(function(e){
     if(e.keyCode==keyCode){
     	$("#command").text("");
-      return true;
+      callback(true);
     }
-  })
+  }) 
 }
 
 
