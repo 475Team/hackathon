@@ -7,7 +7,7 @@ function timekeeper(videoTime) {
       }
     } else if (videoTime >= 5){
     	if (clicked == false){
-    		player.stopVideo(); //change this
+    		player.seekTo(0); //change this
     	}
     	clicked = false;
     }
