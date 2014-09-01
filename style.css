@@ -1,0 +1,40 @@
+h1 {
+	font-family: Arial, sans-serif;
+	font-size: 30px;
+	padding-left: 10px;
+}
+
+h2 {
+	font-family: Arial, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+	padding-left: 10px;
+
+}
+
+p {
+	font-family: Arial, sans-serif;
+	font-size: 13px;
+	text-align: center;
+}
+
+#player {
+	width: 900px;
+	height: 510px;
+	padding-left: 10px;
+}
+
+/* Popup */
+
+/* Z-index of #mask must lower than #boxes .window */
+#boxes .window {
+  position:fixed;
+  z-index:9999;
+  padding:20px;
+}
+/* Customize your modal window here, you can add background image too */
+#boxes #dialog {
+  width:120px; 
+  height:60px;
+  background-color: yellow;
+}

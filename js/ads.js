@@ -18,6 +18,7 @@ function onYouTubeIframeAPIReady() {
         'onStateChange': onPlayerStateChange
     }
   });
+  $('.window').hide();
 }
 
 // 4. The API will call this function when the video player is ready.
@@ -40,6 +41,7 @@ function onPlayerReady(event) {
       });
       if (videoTime >= 10 && clicked == false){
         player.seekTo(0);
+        $('.window').hide();
       }
       console.log(clicked);
     }

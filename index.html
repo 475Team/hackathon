@@ -6,43 +6,34 @@
   <script async id="www-widgetapi-script" src="https://s.ytimg.com/yts/jsbin/www-widgetapi-vfl1ux9Iq/www-widgetapi.js"></script>
   <script type="text/javascript" src="js/ads.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
-  <style>
-/* Z-index of #mask must lower than #boxes .window */
-#boxes .window {
-  position:fixed;
-  z-index:9999;
-  padding:20px;
-}
-/* Customize your modal window here, you can add background image too */
-#boxes #dialog {
-  width:375px; 
-  height:203px;
-  background-color: yellow;
-}
-</style>
+  <link href="style.css" rel="stylesheet" type="text/css">
   </head>
 
   <body>
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <div id="player"></div>
 
-  <div id="adDiv">
-    <p id="numAds">You have watched <span id="num">0</span> ads.</p>
-  </div>
+    <h1>Ad Viewer</h1>
 
-  <div>
-    <p id="command">None</p>
-  </div>
+    <div id="viewer">
+
+      <div id="adDiv">
+        <h2 id="numAds">You have watched <span id="num">0</span> ads.</h2>
+      </div>
+
+      <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+      <div id="player"></div>
+
+    <div>
+      <p id="command"></p>
+    </div>
 
 
-<div id="boxes">
-    
-    <!-- #customize your modal window here -->
-    <div id="dialog" class="window">
-        <b>Testing of Modal Window</b> | 
-        
-        <!-- close button is defined as close class -->
-        <!--a href="#" class="close">Close it</a-->
+      <div id="boxes">
+      
+      <!-- #customize your modal window here -->
+      <div id="dialog" class="window">
+          <p>Please press P</p>
+      </div>
+
     </div>
     
     
