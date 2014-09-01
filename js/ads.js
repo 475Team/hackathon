@@ -24,7 +24,6 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   console.log("Player ready");
   event.target.playVideo();
-  console.log("hi");
   //refactor this
   var videoTime = 0;
   var timeupdater = null;
