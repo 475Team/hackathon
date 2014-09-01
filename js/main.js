@@ -4,8 +4,10 @@ function timekeeper(videoTime) {
       $("#command").text("Press P");
       if (clicked == false){
       	clicked = clickKeyboard(80);
+      	console.log("inside the p: " + clicked)
       }
     } else if (videoTime >= 5){
+    	console.log(clicked)
     	if (clicked == false){
     		player.stopVideo(); //change this
     	}
