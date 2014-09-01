@@ -27,13 +27,14 @@ function onPlayerReady(event) {
   //refactor this
   var videoTime = 0;
   var timeupdater = null;
+  var clicked = false;
   function updateTime() {
     var oldTime = videoTime;
     if(player && player.getCurrentTime) {
       videoTime = player.getCurrentTime();
     }
-    if(videoTime !== oldTime) {
-      timekeeper(videoTime);
+    if(videoTime !== oldTime && clicked != true) {
+      clicked = timekeeper(videoTime, 0, 10);
     }
   }
   timeupdater = setInterval(updateTime, 100);
