@@ -43,12 +43,16 @@ function onPlayerReady(event) {
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
 var done = false;
+var numAds = 0;
 function onPlayerStateChange(event) {
   console.log("Player state change");
   if (event.data == YT.PlayerState.PLAYING && !done) {
     var currentTime = player.getCurrentTime();
     //setTimeout(stopVideo, 6000);
     done = true;
+  } else if (event.data == YT.PlayerState.ENDED) {
+      numAds++;
+      $("#num").text(numAds / 2);
   }
 }
 function stopVideo() {
