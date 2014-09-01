@@ -9,6 +9,7 @@ function onYouTubeIframeAPIReady() {
       width: '100%',
       playerVars: {
           controls: '0',
+          disablekb: '1',
           listType: 'playlist',
           list: 'PLo95Y9IxXB5VQ07LAjjUq8cHBlUcgVHa0'
       },
