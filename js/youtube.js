@@ -1,4 +1,3 @@
-
   if (!window['YT']) {
     var YT = {loading: 0,loaded: 0};
   }
