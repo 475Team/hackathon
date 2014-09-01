@@ -97,9 +97,21 @@ function onPlayerStateChange(event) {
       $("#num").text(numAds / 2);
       newVideo = true;
   } else if (event.data == YT.PlayerState.PLAYING && newVideo == true) {
-    generateIntervals(0);
+    if (intervals.length == 0) {
+      generateIntervals(0);
+    } else {
+      resetIntervals(function() {
+        generateIntervals(0);
+      })
+    }
   }
 }
+
+function resetIntervals(intervals, callback){
+  intervals = [];
+  callback();
+}
+
 function stopVideo() {
   player.stopVideo();
 }
