@@ -18,7 +18,7 @@ function onYouTubeIframeAPIReady() {
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
   event.target.playVideo();
-
+  console.log("hi");
   //refactor this
   var videoTime = 0;
   var timeupdater = null;
@@ -28,11 +28,10 @@ function onPlayerReady(event) {
       videoTime = player.getCurrentTime();
     }
     if(videoTime !== oldTime) {
-      onProgress(videoTime);
+      timekeeper(videoTime);
     }
   }
   timeupdater = setInterval(updateTime, 100);
-  timekeeper(videoTime);
 }
 
 // 5. The API calls this function when the player's state changes.
