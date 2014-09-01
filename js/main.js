@@ -1,5 +1,5 @@
 function timekeeper(videoTime){
     if (videoTime > 1 && videoTime < 15) {
-      $("#command").text(currentTime);
+      $("#command").text(videoTime);
     }
 }
