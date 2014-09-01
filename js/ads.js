@@ -33,8 +33,15 @@ function onPlayerReady(event) {
     if(player && player.getCurrentTime) {
       videoTime = player.getCurrentTime();
     }
-    if(videoTime !== oldTime && clicked != true) {
-      clicked = timekeeper(videoTime, 0, 10);
+    if(videoTime != oldTime && clicked == false) {
+      console.log(videoTime);
+      timekeeper(clicked, videoTime, 5, 10, function(isClicked){
+        clicked = isClicked;
+      });
+      if (videoTime >= 10 && clicked == false){
+        player.seekTo(0);
+      }
+      console.log(clicked);
     }
   }
   timeupdater = setInterval(updateTime, 100);
