@@ -1,18 +1,13 @@
-function timekeeper(videoTime) { 
-		var clicked = false;
-    if (videoTime > 1 && videoTime < 5) {
+function timekeeper(videoTime, startInterval, endInterval) { 
+    console.log("time");
+    if (videoTime > startInterval && videoTime < endInterval) {
       $("#command").text("Press P");
-      if (clicked == false){
-      	clicked = clickKeyboard(80);
-      	console.log("inside the p: " + clicked)
-      }
-    } else if (videoTime >= 5){
-    	console.log(clicked)
-    	if (clicked == false){
-    		player.stopVideo(); //change this
-    	}
-    	clicked = false;
+
+      	return clickKeyboard(80);
+    } else if (videoTime >= 10){
+        player.seekTo(0);
     }
+    return false;
 }
 
 function clickKeyboard(keyCode){

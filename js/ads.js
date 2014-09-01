@@ -9,6 +9,7 @@ function onYouTubeIframeAPIReady() {
       width: '100%',
       playerVars: {
           controls: '0',
+          disablekb: '1',
           listType: 'playlist',
           list: 'PLo95Y9IxXB5VQ07LAjjUq8cHBlUcgVHa0'
       },
@@ -26,13 +27,14 @@ function onPlayerReady(event) {
   //refactor this
   var videoTime = 0;
   var timeupdater = null;
+  var clicked = false;
   function updateTime() {
     var oldTime = videoTime;
     if(player && player.getCurrentTime) {
       videoTime = player.getCurrentTime();
     }
-    if(videoTime !== oldTime) {
-      timekeeper(videoTime);
+    if(videoTime !== oldTime && clicked != true) {
+      clicked = timekeeper(videoTime, 0, 10);
     }
   }
   timeupdater = setInterval(updateTime, 100);
@@ -41,13 +43,12 @@ function onPlayerReady(event) {
 // 5. The API calls this function when the player's state changes.
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
-var done = false;
+
 function onPlayerStateChange(event) {
   console.log("Player state change");
-  if (event.data == YT.PlayerState.PLAYING && !done) {
+  if (event.data == YT.PlayerState.PLAYING) {
     var currentTime = player.getCurrentTime();
     //setTimeout(stopVideo, 6000);
-    done = true;
   }
 }
 function stopVideo() {
