@@ -57,7 +57,6 @@ function onPlayerReady(event) {
           clicked = false;
         }
       })
-
     }
   }
   timeupdater = setInterval(updateTime, 100);
@@ -94,9 +93,11 @@ function getTime(clicked, videoTime, startInterval, endInterval, keyCode, callba
     // refactor code below
     if (clicked != true){
       player.seekTo(0);
+      $(".window").hide();
       clicked = false;
     } else {
       clicked = false;
+      $(".window").hide();
     }
     callback(clicked);
   }
