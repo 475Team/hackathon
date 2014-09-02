@@ -69,8 +69,7 @@ function generateIntervals(startTime, startFlag) {
 
 function getTime(videoTime, startInterval, endInterval, keyCode) {
   var clicked = false;
-  timekeeper(videoTime, startInterval, endInterval, function(isClicked){
-    clicked = isClicked;
+  timekeeper(videoTime, startInterval, endInterval, function(clicked){
     console.log("Timekeeper callback: " + clicked);
     console.log("Clicked: " + clicked);
     if (clicked == true) {
