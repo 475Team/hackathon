@@ -96,8 +96,8 @@ function getTime(clicked, videoTime, startInterval, endInterval, keyCode, callba
       $(".window").hide();
       clicked = false;
     } else {
-      clicked = false;
       $(".window").hide();
+      clicked = false;
     }
     callback(clicked);
   }
