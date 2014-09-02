@@ -40,6 +40,7 @@ function onPlayerReady(event) {
       });
       if (videoTime >= 10 && clicked == false){
         player.seekTo(0);
+        $(".window").hide();
       }
       console.log(clicked);
     }
