@@ -1,7 +1,7 @@
 var offset = 5;
 var intervals = [];
 var newVideo = true;
-
+var minLength = 10;
 // 3. This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
 var player;
@@ -32,27 +32,45 @@ function onPlayerReady(event) {
   var videoTime = 0;
   var timeupdater = null;
   var clicked = false;
+  var nextStartTime;
+
   function updateTime() {
     var oldTime = videoTime;
     if(player && player.getCurrentTime) {
       videoTime = player.getCurrentTime();
     }
-    if(videoTime != oldTime && clicked == false) {
-      getTime(clicked, videoTime, 1, 10, 83, function(isClicked) {
-        clicked = isClicked;
-      });
+    console.log(videoTime);
+    if (intervals.length > 0){
+      getStartTime(function(nextStartTime){
+        if(videoTime != oldTime && clicked == false && videoTime >= nextStartTime) {
+          generateKey(function(keyCode){
+            getTime(clicked, videoTime, nextStartTime, nextStartTime + minLength, keyCode, function(isClicked) {
+              clicked = isClicked;
+              if(clicked == true){
+                nextStartTime = intervals.shift();
+                console.log("nextStartTime: " + nextStartTime);
+              }
+            });          
+          })
+        }
+        if(nextStartTime > videoTime){
+          clicked = false;
+        }
+      })
     }
   }
   timeupdater = setInterval(updateTime, 100);
 }
 
+function getStartTime(callback){
+  callback(intervals.shift());
+}
 function generateIntervals(startTime, startFlag) {
   if (startFlag == true){
     intervals = [];
   }
   var duration = player.getDuration();
   console.log(duration);
-  var minLength = 10;
   var maxDiff = 10;
   startTime = startTime + minLength + Math.random() * maxDiff;
   console.log(startTime);
@@ -65,18 +83,21 @@ function generateIntervals(startTime, startFlag) {
 }
 
 function getTime(clicked, videoTime, startInterval, endInterval, keyCode, callback) {
-  console.log(videoTime);
+
   timekeeper(clicked, videoTime, startInterval, endInterval, function(isClicked){
     clicked = isClicked;
     callback(clicked);
   }, keyCode);
   if (videoTime >= endInterval) {
     $("#command").text("");
+    // refactor code below
     if (clicked != true){
       player.seekTo(0);
+      $(".window").hide();
       clicked = false;
     } else {
       clicked = false;
+      $(".window").hide();
     }
     callback(clicked);
   }
@@ -92,7 +113,6 @@ function onPlayerStateChange(event) {
   console.log(event.data + ", " + newVideo);
   if (event.data == YT.PlayerState.PLAYING) {
     var currentTime = player.getCurrentTime();
-    //setTimeout(stopVideo, 6000);
   } else if (event.data == YT.PlayerState.ENDED) {
       numAds++;
       $("#num").text(numAds / 2);
@@ -101,6 +121,10 @@ function onPlayerStateChange(event) {
     console.log("next vid");
     generateIntervals(0, true);
   }
+}
+
+function generateKey(callback){
+  callback(65 + Math.floor(Math.random()*25));
 }
 
 function stopVideo() {
