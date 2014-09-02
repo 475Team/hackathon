@@ -2,6 +2,7 @@ var offset = 5;
 var intervals = [];
 var newVideo = true;
 var minLength = 10;
+var currentKey;
 // 3. This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
 var player;
@@ -15,7 +16,7 @@ function onYouTubeIframeAPIReady() {
           controls: '0',
           disablekb: '1',
           listType: 'playlist',
-          list: 'PLo95Y9IxXB5VQ07LAjjUq8cHBlUcgVHa0'
+          list: 'PLDB2873BD72B1530A'
       },
       events: {
         'onReady': onPlayerReady,
@@ -39,32 +40,19 @@ function onPlayerReady(event) {
     if(player && player.getCurrentTime) {
       videoTime = player.getCurrentTime();
     }
-    console.log(videoTime);
-    if (intervals.length > 0){
-      getStartTime(function(nextStartTime){
-        if(videoTime != oldTime && clicked == false && videoTime >= nextStartTime) {
-          generateKey(function(keyCode){
-            getTime(clicked, videoTime, nextStartTime, nextStartTime + minLength, keyCode, function(isClicked) {
-              clicked = isClicked;
-              if(clicked == true){
-                nextStartTime = intervals.shift();
-                console.log("nextStartTime: " + nextStartTime);
-              }
-            });          
-          })
-        }
-        if(nextStartTime > videoTime){
-          clicked = false;
-        }
-      })
+    if (intervals.length > 0) {
+      if(videoTime != oldTime && clicked == false && videoTime >= intervals[0]) {
+        getTime(clicked, videoTime, intervals[0], intervals[0] + minLength, currentKey, function(isClicked) {
+          clicked = isClicked;
+          console.log("getTime callback: " + clicked);
+        });       
+      }
     }
+    console.log("updateTime: " + clicked);
   }
   timeupdater = setInterval(updateTime, 100);
 }
 
-function getStartTime(callback){
-  callback(intervals.shift());
-}
 function generateIntervals(startTime, startFlag) {
   if (startFlag == true){
     intervals = [];
@@ -80,29 +68,34 @@ function generateIntervals(startTime, startFlag) {
   }
   console.log(intervals);
   newVideo = false;
+  currentKey = generateKey();
+  videoTime = 0;
 }
 
 function getTime(clicked, videoTime, startInterval, endInterval, keyCode, callback) {
 
   timekeeper(clicked, videoTime, startInterval, endInterval, function(isClicked){
     clicked = isClicked;
+    console.log("Timekeeper callback: " + clicked);
     callback(clicked);
   }, keyCode);
-  if (videoTime >= endInterval) {
-    $("#command").text("");
-    // refactor code below
-    if (clicked != true){
-      player.seekTo(0);
-      $(".window").hide();
-      clicked = false;
-    } else {
-      clicked = false;
-      $(".window").hide();
-    }
-    callback(clicked);
+  console.log("Clicked: " + clicked);
+  if (clicked == true) {
+    console.log("Handle clicked is true");
+    clicked = false;
+    intervals.shift();
+    console.log(intervals);
+    currentKey = generateKey();
+  } else if (videoTime >= endInterval && clicked != true) {
+    console.log("Handle past end of interval & clicked not true");
+    player.seekTo(0);
+    $("#dialog").text("");
+    $(".window").hide();
+    clicked = false;
+    generateIntervals(0, true);
   }
-  
-  console.log(clicked);
+  console.log("Clicked: " + clicked + " Next start: " + intervals[0]);
+  callback(clicked);
 }
 
 // 5. The API calls this function when the player's state changes.
@@ -123,8 +116,8 @@ function onPlayerStateChange(event) {
   }
 }
 
-function generateKey(callback){
-  callback(65 + Math.floor(Math.random()*25));
+function generateKey(){
+  return 65 + Math.floor(Math.random()*25);
 }
 
 function stopVideo() {

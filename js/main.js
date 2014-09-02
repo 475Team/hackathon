@@ -1,10 +1,9 @@
 function timekeeper(clicked, videoTime, startInterval, endInterval, callback, keyCode) { 
-    console.log("timekeeper: " + clicked);
     if (videoTime > startInterval && videoTime < endInterval) {
-      $("#command").text("Press " + String.fromCharCode(keyCode));
+      $("#dialog").text("Press " + String.fromCharCode(keyCode));
       $('.window').show();
       showPopUp();
-    	clickKeyboard(80, function(isClicked){
+    	clickKeyboard(keyCode, function(isClicked){
     		callback(true);
     		
     	})
@@ -13,8 +12,9 @@ function timekeeper(clicked, videoTime, startInterval, endInterval, callback, ke
 
 function clickKeyboard(keyCode, callback){
   $(document).keydown(function(e){
+  	console.log(e.keyCode + " : " + keyCode);
     if(e.keyCode==keyCode){
-    	$("#command").text("");
+    	$("#dialog").text("");
     	$('.window').hide();
       callback(true);
     }
