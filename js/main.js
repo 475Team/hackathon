@@ -1,5 +1,5 @@
 function timekeeper(clicked, videoTime, startInterval, endInterval, callback, keyCode) { 
-    console.log("time");
+    console.log("timekeeper: " + clicked);
     if (videoTime > startInterval && videoTime < endInterval) {
       $("#command").text("Press " + String.fromCharCode(keyCode));
     	clickKeyboard(keyCode, function(isClicked){
