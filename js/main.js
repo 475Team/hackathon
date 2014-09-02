@@ -26,7 +26,7 @@ function showPopUp(){
   console.log("show message")
   var id = $("#dialog");
         //Set the popup window to center
-        $(id).css('top',  125);
+        $(id).css('top',  300);
         $(id).css('left', 360.5);
         
 }
