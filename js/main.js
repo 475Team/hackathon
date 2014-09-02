@@ -1,4 +1,4 @@
-function timekeeper(clicked, videoTime, startInterval, endInterval, callback, keyCode) { 
+function timekeeper(videoTime, startInterval, endInterval, callback, keyCode) { 
     if (videoTime > startInterval && videoTime < endInterval) {
       $("#dialog").text("Press " + String.fromCharCode(keyCode));
       $('.window').show();
@@ -8,6 +8,7 @@ function timekeeper(clicked, videoTime, startInterval, endInterval, callback, ke
     		
     	})
     }
+    callback(false);
 }
 
 function clickKeyboard(keyCode, callback){

@@ -32,7 +32,6 @@ function onPlayerReady(event) {
   //refactor this
   var videoTime = 0;
   var timeupdater = null;
-  var clicked = false;
   var nextStartTime;
 
   function updateTime() {
@@ -41,14 +40,10 @@ function onPlayerReady(event) {
       videoTime = player.getCurrentTime();
     }
     if (intervals.length > 0) {
-      if(videoTime != oldTime && clicked == false && videoTime >= intervals[0]) {
-        getTime(clicked, videoTime, intervals[0], intervals[0] + minLength, currentKey, function(isClicked) {
-          clicked = isClicked;
-          console.log("getTime callback: " + clicked);
-        });       
+      if(videoTime != oldTime && videoTime >= intervals[0]) {
+        getTime(videoTime, intervals[0], intervals[0] + minLength, currentKey);       
       }
     }
-    console.log("updateTime: " + clicked);
   }
   timeupdater = setInterval(updateTime, 100);
 }
@@ -72,30 +67,32 @@ function generateIntervals(startTime, startFlag) {
   videoTime = 0;
 }
 
-function getTime(clicked, videoTime, startInterval, endInterval, keyCode, callback) {
-
-  timekeeper(clicked, videoTime, startInterval, endInterval, function(isClicked){
+function getTime(videoTime, startInterval, endInterval, keyCode) {
+  var clicked = false;
+  timekeeper(videoTime, startInterval, endInterval, function(isClicked){
     clicked = isClicked;
     console.log("Timekeeper callback: " + clicked);
-    callback(clicked);
+    console.log("Clicked: " + clicked);
+    if (clicked == true) {
+      console.log("Handle clicked is true");
+      clicked = false;
+      if (videoTime > intervals[0]) {
+        intervals.shift();
+      }
+      console.log(intervals);
+      currentKey = generateKey();
+    } else if (videoTime >= endInterval && clicked != true) {
+      console.log("Handle past end of interval & clicked not true");
+      player.seekTo(0);
+      $("#dialog").text("");
+      $(".window").hide();
+      clicked = false;
+      generateIntervals(0, true);
+    }
+    console.log("Clicked: " + clicked + " Next start: " + intervals[0]);
   }, keyCode);
-  console.log("Clicked: " + clicked);
-  if (clicked == true) {
-    console.log("Handle clicked is true");
-    clicked = false;
-    intervals.shift();
-    console.log(intervals);
-    currentKey = generateKey();
-  } else if (videoTime >= endInterval && clicked != true) {
-    console.log("Handle past end of interval & clicked not true");
-    player.seekTo(0);
-    $("#dialog").text("");
-    $(".window").hide();
-    clicked = false;
-    generateIntervals(0, true);
-  }
-  console.log("Clicked: " + clicked + " Next start: " + intervals[0]);
-  callback(clicked);
+  
+  // callback(clicked);
 }
 
 // 5. The API calls this function when the player's state changes.
