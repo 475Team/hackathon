@@ -28,8 +28,6 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   console.log("Player ready");
   event.target.playVideo();
-
-  generateIntervals(0);
   //refactor this
   var videoTime = 0;
   var timeupdater = null;
@@ -48,7 +46,10 @@ function onPlayerReady(event) {
   timeupdater = setInterval(updateTime, 100);
 }
 
-function generateIntervals(startTime) {
+function generateIntervals(startTime, startFlag) {
+  if (startFlag == true){
+    intervals = [];
+  }
   var duration = player.getDuration();
   console.log(duration);
   var minLength = 10;
@@ -88,7 +89,7 @@ function getTime(clicked, videoTime, startInterval, endInterval, keyCode, callba
 //    the player should play for six seconds and then stop.
 var numAds = 0;
 function onPlayerStateChange(event) {
-  console.log("Player state change");
+  console.log(event.data + ", " + newVideo);
   if (event.data == YT.PlayerState.PLAYING) {
     var currentTime = player.getCurrentTime();
     //setTimeout(stopVideo, 6000);
@@ -96,20 +97,10 @@ function onPlayerStateChange(event) {
       numAds++;
       $("#num").text(numAds / 2);
       newVideo = true;
-  } else if (event.data == YT.PlayerState.PLAYING && newVideo == true) {
-    if (intervals.length == 0) {
-      generateIntervals(0);
-    } else {
-      resetIntervals(function() {
-        generateIntervals(0);
-      })
-    }
+  } else if (event.data == YT.PlayerState.UNSTARTED) {
+    console.log("next vid");
+    generateIntervals(0, true);
   }
-}
-
-function resetIntervals(intervals, callback){
-  intervals = [];
-  callback();
 }
 
 function stopVideo() {
